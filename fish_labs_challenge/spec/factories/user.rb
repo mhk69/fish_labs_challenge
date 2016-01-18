@@ -5,5 +5,6 @@ FactoryGirl.define do
     team_one []
     team_two []
     team_three []
+    owned_monsters []
   end
 end

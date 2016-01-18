@@ -6,7 +6,7 @@ FishLabsChallenge::App.controllers :user do
     password = json['password']
 
     if username.present? && password.present?
-      new_user = User.create(email: username, password: password, team_one: [], team_two: [], team_three: [])
+      new_user = User.create(email: username, password: password, team_one: [], team_two: [], team_three: [], owned_monsters: [])
       if new_user.id
         { message: 'Succesfully added this user', id: new_user.id }.to_json
       else

@@ -46,28 +46,44 @@ describe '/team' do
       end
     end
 
-    context 'when a user has 3 full teams' do
+    context 'when a user has 3 full teams and no owned monsters' do
       before do
         FactoryGirl.create :user, email: "test3", team_one: [1, 2, 3], team_two: [1, 2, 3], team_three: [1, 2, 3]
         FactoryGirl.create :monster
         @body = "{\"username\": \"test3\", \"password\":\"test_pw\", \"monster_id\":\"6\"}"
       end
 
-      it 'returns a json stating teams are full' do
+      it 'returns a json stating the monster is in owned monsters' do
         post '/team/add', @body
 
         json = JSON.parse(last_response.body)
 
-        expect(json['message']).to eq('Teams are full - unable to add')
+        expect(json['message']).to eq('Added this monster to owned monsters')
+      end
+    end
+
+    context 'when a user has 3 full teams and full owned monsters' do
+      before do
+        FactoryGirl.create :user, email: "test_full", team_one: [1, 2, 3], team_two: [1, 2, 3], team_three: [1, 2, 3], owned_monsters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        FactoryGirl.create :monster
+        @body = "{\"username\": \"test_full\", \"password\":\"test_pw\", \"monster_id\":\"7\"}"
+      end
+
+      it 'returns a json stating the user can not have more monsters' do
+        post '/team/add', @body
+
+        json = JSON.parse(last_response.body)
+
+        expect(json['message']).to eq('You own too many monsters')
       end
     end
 
     context 'when a user has that monster already added' do
       before do
-        FactoryGirl.create :user, email: "test4", team_one: [7]
+        FactoryGirl.create :user, email: "test4", team_one: [8]
         FactoryGirl.create :monster
 
-        @body = "{\"username\": \"test4\", \"password\":\"test_pw\", \"monster_id\":\"7\"}"
+        @body = "{\"username\": \"test4\", \"password\":\"test_pw\", \"monster_id\":\"8\"}"
       end
 
       it 'returns a json stating it already exists' do
@@ -76,6 +92,36 @@ describe '/team' do
         json = JSON.parse(last_response.body)
 
         expect(json['message']).to eq('This monster is in a team')
+      end
+    end
+  end
+
+  describe '#delete_from_team' do
+    context 'when invalid params are sent' do
+      it 'returns an error json' do
+        @body = "{\"username\": \"test_email\", \"password\":\"test_pw\", \"monster_id\":\"-1\"}"
+
+        post '/team/delete_from_team', @body
+
+        json = JSON.parse(last_response.body)
+
+        expect(json['message']).to eq('That user or monster does not exist')
+      end
+    end
+
+    context 'when a valid param is sent' do
+      before do
+        FactoryGirl.create :user, email: "test5", team_one: [9]
+        FactoryGirl.create :monster
+        @body = "{\"username\": \"test5\", \"password\":\"test_pw\", \"monster_id\":\"9\"}"
+      end
+
+      it 'returns a json stating the monster was deleted' do
+        post '/team/delete_from_team', @body
+
+        json = JSON.parse(last_response.body)
+
+        expect(json['message']).to eq('Deleted monster from a team')
       end
     end
   end
@@ -95,9 +141,9 @@ describe '/team' do
 
     context 'when a valid param is sent' do
       before do
-        FactoryGirl.create :user, email: "test5", team_one: [8]
+        FactoryGirl.create :user, email: "test6", team_one: [10]
         FactoryGirl.create :monster
-        @body = "{\"username\": \"test5\", \"password\":\"test_pw\", \"monster_id\":\"8\"}"
+        @body = "{\"username\": \"test6\", \"password\":\"test_pw\", \"monster_id\":\"10\"}"
       end
 
       it 'returns a json stating the monster was deleted' do
