@@ -26,6 +26,7 @@ describe '/monster' do
         expect(json[0]['name']).to eq('test_monster_name')
         expect(json[0]['power']).to eq(50)
         expect(json[0]['type']).to eq('fire')
+        expect(json[0]['weakness']).to eq('water')
       end
     end
   end

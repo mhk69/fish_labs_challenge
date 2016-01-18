@@ -7,7 +7,8 @@ FishLabsChallenge::App.controllers :monster do
         id: monster.id,
         name: monster.name,
         power: monster.power,
-        type: monster.monstertype
+        type: monster.monstertype,
+        weakness: monster.monsterweakness
       }.deep_stringify_keys
     }.to_json
   end
@@ -31,7 +32,8 @@ FishLabsChallenge::App.controllers :monster do
       return { message: 'Invalid type' }.to_json
     end
 
-    new_monster = Monster.create(name: name, power: power, monstertype: type)
+    weakness = TypeChecker.get_weakness(type)
+    new_monster = Monster.create(name: name, power: power, monstertype: type, monsterweakness: weakness)
     if new_monster.id
       { message: 'Monster created succesfully', id: new_monster.id }.to_json
     else

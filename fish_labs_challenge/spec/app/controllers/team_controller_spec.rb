@@ -19,7 +19,7 @@ describe '/team' do
         FactoryGirl.create :user
         FactoryGirl.create :monster
 
-        @body = "{\"username\": \"test_email\", \"password\":\"test_pw\", \"monster_id\":\"4\"}"
+        @body = "{\"username\": \"test_email\", \"password\":\"test_pw\", \"monster_id\":\"16\"}"
       end
       it 'adds a monster to team 1' do
         post '/team/add', @body
@@ -34,7 +34,7 @@ describe '/team' do
       before do
         FactoryGirl.create :user, email: "test2", team_one: [1, 2, 3]
         FactoryGirl.create :monster
-        @body = "{\"username\": \"test2\", \"password\":\"test_pw\", \"monster_id\":\"5\"}"
+        @body = "{\"username\": \"test2\", \"password\":\"test_pw\", \"monster_id\":\"17\"}"
       end
 
       it 'adds a monster to team 2' do
@@ -50,7 +50,7 @@ describe '/team' do
       before do
         FactoryGirl.create :user, email: "test3", team_one: [1, 2, 3], team_two: [1, 2, 3], team_three: [1, 2, 3]
         FactoryGirl.create :monster
-        @body = "{\"username\": \"test3\", \"password\":\"test_pw\", \"monster_id\":\"6\"}"
+        @body = "{\"username\": \"test3\", \"password\":\"test_pw\", \"monster_id\":\"18\"}"
       end
 
       it 'returns a json stating the monster is in owned monsters' do
@@ -66,7 +66,7 @@ describe '/team' do
       before do
         FactoryGirl.create :user, email: "test_full", team_one: [1, 2, 3], team_two: [1, 2, 3], team_three: [1, 2, 3], owned_monsters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         FactoryGirl.create :monster
-        @body = "{\"username\": \"test_full\", \"password\":\"test_pw\", \"monster_id\":\"7\"}"
+        @body = "{\"username\": \"test_full\", \"password\":\"test_pw\", \"monster_id\":\"19\"}"
       end
 
       it 'returns a json stating the user can not have more monsters' do
@@ -80,10 +80,10 @@ describe '/team' do
 
     context 'when a user has that monster already added' do
       before do
-        FactoryGirl.create :user, email: "test4", team_one: [8]
+        FactoryGirl.create :user, email: "test4", team_one: [20]
         FactoryGirl.create :monster
 
-        @body = "{\"username\": \"test4\", \"password\":\"test_pw\", \"monster_id\":\"8\"}"
+        @body = "{\"username\": \"test4\", \"password\":\"test_pw\", \"monster_id\":\"20\"}"
       end
 
       it 'returns a json stating it already exists' do
@@ -113,7 +113,7 @@ describe '/team' do
       before do
         FactoryGirl.create :user, email: "test5", team_one: [9]
         FactoryGirl.create :monster
-        @body = "{\"username\": \"test5\", \"password\":\"test_pw\", \"monster_id\":\"9\"}"
+        @body = "{\"username\": \"test5\", \"password\":\"test_pw\", \"monster_id\":\"21\"}"
       end
 
       it 'returns a json stating the monster was deleted' do
@@ -143,7 +143,7 @@ describe '/team' do
       before do
         FactoryGirl.create :user, email: "test6", team_one: [10]
         FactoryGirl.create :monster
-        @body = "{\"username\": \"test6\", \"password\":\"test_pw\", \"monster_id\":\"10\"}"
+        @body = "{\"username\": \"test6\", \"password\":\"test_pw\", \"monster_id\":\"22\"}"
       end
 
       it 'returns a json stating the monster was deleted' do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 5) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 4) do
     t.string   "monstertype"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "monsterweakness"
   end
 
   create_table "users", force: :cascade do |t|
@@ -29,9 +30,9 @@ ActiveRecord::Schema.define(version: 4) do
     t.string   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "team_one",                    array: true
-    t.integer  "team_two",                    array: true
-    t.integer  "team_three",                  array: true
+    t.integer  "team_one",       default: [], array: true
+    t.integer  "team_two",       default: [], array: true
+    t.integer  "team_three",     default: [], array: true
     t.integer  "owned_monsters", default: [], array: true
   end
 

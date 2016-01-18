@@ -21,4 +21,18 @@ class TypeChecker
 	def self.convert_to_string(index)
 		ALL_TYPES_BY_INDEX[index]
 	end
+
+	def self.get_weakness(type)
+		if type == 'water'
+			return 'earth'
+		elsif type == 'earth'
+			return 'electric'
+		elsif type == 'electric'
+			return 'wind'
+		elsif type == 'wind'
+			return 'fire'
+		else
+			return 'water'
+		end
+	end
 end
